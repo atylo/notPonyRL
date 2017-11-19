@@ -109,13 +109,10 @@
 				
 			if (World.getHandler(STATE_GAME).isActive)	
 				if (World.wrapper.getOption(OPTION_TOUCH_CONTROLS))
-					if (World.getHandler(STATE_GAME).isTargetMode)
-					{
-						jQuery('#move_target').removeClass('active');
-						World.getHandler(STATE_GAME).isTargetMode = false;
-					}
-					else
-						return false;
+				{
+					jQuery('#move_target').removeClass('active');
+					World.getHandler(STATE_GAME).isTargetMode = false;
+				}
 			
 			if(World.player.gp < this.items[id].cost)
 			{

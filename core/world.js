@@ -146,12 +146,15 @@ function TWorld()
 	
 	this.hover = function(x, y)
 	{
+		var res = false;
 		if(this.map.objects[y][x].length > 0)
 			for(var z in this.map.objects[y][x])
 			{
 				TConfig.skills[this.player.active_skill].onHover(this.map.objects[y][x][z], this.map.objects[y][x][z].getType());
-				this.map.objects[y][x][z].onHover();
+				res = this.map.objects[y][x][z].onHover() || res;
 			}
+		if(res)
+			World.queue.drawAlerts();
 	};
 	
 	this.keyAction = function(dx, dy, mode)
