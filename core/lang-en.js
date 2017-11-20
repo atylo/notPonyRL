@@ -1143,15 +1143,15 @@ TConfig.data[KEY_LANGUAGE][LANGUAGE_EN] = function()
 	addLang('achievements.' + REWARD_ESCAPE_VELOCITY + '.title', 'Escape Velocity');
 	addLang('achievements.' + REWARD_ESCAPE_VELOCITY + '.description', 'Finish Everfree in 300 turns or less.');
 	addLang('achievements.' + REWARD_SPICY_HERBS + '.title', 'Spicy Herbs');
-	addLang('achievements.' + REWARD_SPICY_HERBS + '.description', 'Make a dozen of elexirs during your adventure for potions must flow.');
+	addLang('achievements.' + REWARD_SPICY_HERBS + '.description', 'Make a dozen of elixirs during your adventure for potions must flow.');
 	addLang('achievements.' + REWARD_PRESCIENCE + '.title', 'Prescience');
 	addLang('achievements.' + REWARD_PRESCIENCE + '.description', 'They say those with blue eyes can mix potions without recipes. Two formulaes have to be discovered for your reward to become uncovered.');
-	addLang('achievements.' + REWARD_DRAGON_OVERLORD + '.title', 'Our New Dragon Overlord.');
-	addLang('achievements.' + REWARD_DRAGON_OVERLORD + '.description', 'Crush the previous ruler and sieze her army, her hoard and her castle for yourself.');
+	addLang('achievements.' + REWARD_DRAGON_OVERLORD + '.title', 'Our New Dragon Overlord');
+	addLang('achievements.' + REWARD_DRAGON_OVERLORD + '.description', 'Crush the previous ruler and seize her army, her hoard and her castle for yourself.');
 	addLang('achievements.' + REWARD_BRAVE_SIR_ROBIN + '.title', 'Brave Sir Robin ran away...');
 	addLang('achievements.' + REWARD_BRAVE_SIR_ROBIN + '.description', 'When the Shadow Pony reared her ugly head, he bravely turned his tail and fled. <br> Brave Sir Robin turned about, and valiantly, he chickened out! <br> Yet! Somehow the great shadow he beat. <br>A brave retreat by brave Sir Robin!');
-	addLang('achievements.' + REWARD_PLANNING + '.title', 'Careful Planning');
-	addLang('achievements.' + REWARD_PLANNING + '.description', 'Dragons plan their nightmares very carefully...');
+	addLang('achievements.' + REWARD_PLANNING + '.title', 'Follow the Black Dragon');
+	addLang('achievements.' + REWARD_PLANNING + '.description', 'Dragon in a nightmare is a nightmare in itself.');
 
 	
 				// abilities

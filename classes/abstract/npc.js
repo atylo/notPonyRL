@@ -141,7 +141,7 @@ function AbstractNPC()
 		strike_order -= World.player.hasAbilityLevel(TRAIT_SLOW);
 		strike_order -=	this.hasAbilityLevel(TRAIT_FIRST_STRIKE);
 		
-		if(charge >= 7)
+		if(charge >= 6)
 			strike_order++;
 		
 		if(World.player._class == CLASS_ROGUE)

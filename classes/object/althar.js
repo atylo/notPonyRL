@@ -33,7 +33,7 @@ function TObjectAlthar()
 		s.push(this.getGod().getDescription());
 		s.push(lang('cleaner'));
 		
-		return s.join(lang('br'));
+		return this.draw() + s.join(lang('br'));
 	};
 	
 	this.initGod = function(god)

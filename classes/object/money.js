@@ -6,7 +6,7 @@ function TObjectMoney()
 	this.color        = 'yellow';
 	this.id           = OBJECT_MONEY;
 	this.isPassable   = true;
-	this.z            = 1;
+	this.z            = 4;
 	this.gold         = 0;
 	
 	this.init = function()
@@ -23,16 +23,16 @@ function TObjectMoney()
 	{
 		if(World.player._race == RACE_DRAGON) {
 			if(this.gold < 3)
-				return lang('object.' + this.id + '.description.dragon.0', {'m': this.gold});
+				return this.draw() + lang('object.' + this.id + '.description.dragon.0', {'m': this.gold});
 			if(this.gold < 5)
-				return lang('object.' + this.id + '.description.dragon.1', {'m': this.gold});
+				return this.draw() + lang('object.' + this.id + '.description.dragon.1', {'m': this.gold});
 			if(this.gold < 15)
-				return lang('object.' + this.id + '.description.dragon.2', {'m': this.gold});
+				return this.draw() + lang('object.' + this.id + '.description.dragon.2', {'m': this.gold});
 
-			return lang('object.' + this.id + '.description.dragon.3', {'m': this.gold});
+			return this.draw() + lang('object.' + this.id + '.description.dragon.3', {'m': this.gold});
 		}
 
-		return lang('object.' + this.id + '.description.0');
+		return this.draw() + lang('object.' + this.id + '.description.0');
 	};
 
 	this.onMove = function()

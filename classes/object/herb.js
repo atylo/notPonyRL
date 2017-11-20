@@ -17,7 +17,7 @@ function TObjectHerb()
 		if(this.level < World.player.level)
 			s = s + ' ' + lang('object.' + this.id + '.withering');
 			
-		return s;
+		return this.draw() + s;
 	};
 	
 	this.getTitle = function()

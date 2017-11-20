@@ -25,16 +25,16 @@ function TObjectWard()
 		if (this.isOn)
 		{
 			if (World.player._class == CLASS_WIZARD)
-				return lang('object.' + this.id + '.description.on.wizard');
+				return this.draw() + lang('object.' + this.id + '.description.on.wizard');
 			else
-				return lang('object.' + this.id + '.description.on');
+				return this.draw() + lang('object.' + this.id + '.description.on');
 		}
 		else
 		{
 			if (World.player._class == CLASS_WIZARD)
-				return lang('object.' + this.id + '.description.off.wizard');
+				return this.draw() + lang('object.' + this.id + '.description.off.wizard');
 			else
-				return lang('object.' + this.id + '.description.off');
+				return this.draw() + lang('object.' + this.id + '.description.off');
 		}
 	};
 	
