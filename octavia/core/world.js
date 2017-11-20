@@ -233,6 +233,8 @@ function TWorld()
 		}
 		
 		this.map.invalidate(this.player.x, this.player.y);
+		this.player.dx = (x - this.player.x);
+		this.player.dy = (y - this.player.y);
 		this.player.x = x;
 		this.player.y = y;
 		
