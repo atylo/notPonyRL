@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The Pony Roguelike</title>		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="description" content="PonyRL is a My Little Pony browser roguelike game with short sessions and achievement-based progression system." />
+		<meta name="keywords" content="Roguelike, ASCII, My Little Pony, MLP, PonyRL, achievements, coffee-break">
+		
+					<!-- 2012-2015 by Chess Wyrm -->
+			<!-- libraries -->
+		<script src="lib/jquery.min.js?0.9.6b" type="text/javascript"></script>
+		<script src="lib/jquery.ui.js?0.9.6b" type="text/javascript"></script>
+		<script src="lib/jquery.hotkeys.js?0.9.6b" type="text/javascript"></script>
+		<script src="lib/extend.js?0.9.6b"         type="text/javascript"></script>
+		<script src="lib/lib.js?0.9.6b"            type="text/javascript"></script>
+		<script src="lib/rabbit.js?0.9.6b"         type="text/javascript"></script>
+		<script src="lib/howler.js?0.9.6b"         type="text/javascript"></script>
+
+			<!-- jGrowl -->
+		<script src="lib/jgrowl/jquery.jgrowl.min.js?0.9.6b" type="text/javascript" ></script>
+		<link rel="stylesheet" href="lib/jgrowl/jquery.jgrowl.css" type="text/css"/>
+		
+		
+			<!-- core -->
+		<script src="core/const.js?0.9.6b"      type="text/javascript"></script>
+		<script src="core/config.js?0.9.6b"     type="text/javascript"></script>
+		<script src="core/lib.js?0.9.6b"        type="text/javascript"></script>
+		<script src="core/world.js?0.9.6b"      type="text/javascript"></script>
+		<script src="core/data.js?0.9.6b"       type="text/javascript"></script>
+		<script src="core/shop.js?0.9.6b"       type="text/javascript"></script>
+		<script src="core/events.js?0.9.6b"     type="text/javascript"></script>
+		<script src="core/seedrandom.js?0.9.6b" type="text/javascript"></script>
+		<script src="core/replay.js?0.9.6b"     type="text/javascript"></script>
+		
+			<!-- localizations -->
+		<script src="core/lang-tech.js?0.9.6b"    type="text/javascript"></script>
+		<script src="core/lang-en.js?0.9.6ba"    type="text/javascript"></script>
+		<script src="core/lang-fr.js?0.9.6b"    type="text/javascript"></script>
+		<script src="core/lang-it.js?0.9.6b"    type="text/javascript"></script>
+		
+			<!-- secondary objects -->
+		<script src="core/wrapper.js?0.9.6b"   type="text/javascript"></script>
+		<script src="core/menu.js?0.9.6b"      type="text/javascript"></script>
+		<script src="core/queue.js?0.9.6b"     type="text/javascript"></script>
+		<script src="core/map.js?0.9.6b"       type="text/javascript"></script>
+		
+			<!-- state handlers -->
+		<script src="classes/handlers/preload.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/handlers/start.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/handlers/menu.js?0.9.6b"   type="text/javascript"></script>
+		<script src="classes/handlers/game.js?0.9.6b"   type="text/javascript"></script>
+		<script src="classes/handlers/splash.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/handlers/replay.js?0.9.6b" type="text/javascript"></script>
+		
+			<!-- abstractions -->
+		<script src="classes/abstract/field.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/abstract/class.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/abstract/custom_field.js?0.9.6b"   type="text/javascript"></script>
+		<script src="classes/abstract/item.js?0.9.6b"    type="text/javascript"></script>
+		<script src="classes/abstract/object.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/abstract/livingobject.js?0.9.6ba"  type="text/javascript"></script>
+		<script src="classes/abstract/npc.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/abstract/moving_npc.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/abstract/race.js?0.9.6b"    type="text/javascript"></script>
+		<script src="classes/abstract/terrain.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/abstract/skill.js?0.9.6b"   type="text/javascript"></script>
+		<script src="classes/abstract/trap.js?0.9.6b"    type="text/javascript"></script>
+		<script src="classes/abstract/god.js?0.9.6b"     type="text/javascript"></script>
+
+			<!-- classes -->
+		<script src="classes/class/alchemist.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/farmer.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/healer.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/rogue.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/scout.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/trickster.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/warrior.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/class/wizard.js?0.9.6b"     type="text/javascript"></script>
+		
+			<!-- races -->
+		<script src="classes/race/pony.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/unicorn.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/pegasus.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/alicorn.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/zebra.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/dragon.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/changeling.js?0.9.6b"     type="text/javascript"></script>
+		<script src="classes/race/gryphon.js?0.9.6b"     type="text/javascript"></script>
+		
+			<!-- gods -->
+		<script src="classes/god/none.js?0.9.6b"       type="text/javascript"></script>
+		<script src="classes/god/rarity.js?0.9.6bb"      type="text/javascript"></script>
+		<script src="classes/god/fluttershy.js?0.9.6b"      type="text/javascript"></script>
+		<script	src="classes/god/twilight.js?0.9.6b"      type="text/javascript"></script>
+		<script	src="classes/god/applejack.js?0.9.6b"      type="text/javascript"></script>
+		<script	src="classes/god/dash.js?0.9.6b"      type="text/javascript"></script>
+
+		<script	src="classes/god/winter/santa.js?0.9.6b"      type="text/javascript"></script>
+		<script	src="classes/god/winter/frost.js?0.9.6b"      type="text/javascript"></script>
+
+			<!-- skills -->
+		<script src="classes/skill/applekinesis.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/celestias_shield.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/attack.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/magic_missile.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/blink.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/heal.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/stoneskin.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/empower.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/skill/whine.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/stare.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/force.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/force_pony.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/force_wave.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/talisman_spirits.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/talisman_warrior.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/talisman_endurance.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/hoard.js?0.9.6b"  type="text/javascript"></script>
+
+		<!-- invocations -->
+
+		<script src="classes/skill/invocation/frost_general.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/frost_iceborn.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/frost_touch.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/santa_bells.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/santa_reward.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/santa_strong.js?0.9.6b"  type="text/javascript"></script>
+		
+		<script src="classes/skill/invocation/fluttershy_fortitude.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/fluttershy_peace.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/fluttershy_remedy.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/rarity_armor.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/rarity_generosity.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/rarity_restock.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/rarity_touch.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/twilight_affinity.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/twilight_basics.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/twilight_leak.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/twilight_mindlink.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/twilight_recharge.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/applejack_axiom.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/applejack_vision.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/applejack_pragmatism.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/skill/invocation/applejack_evolution.js?0.9.6b"  type="text/javascript"></script>
+		
+		
+			<!-- terrain -->
+		<script src="classes/terrain/horizontal_door.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/terrain/vertical_door.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/terrain/floor.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/terrain/grass.js?0.9.6b"  type="text/javascript"></script>	
+		<script src="classes/terrain/sand.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/terrain/sandstone.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/terrain/wall.js?0.9.6b"  type="text/javascript"></script>
+		<script src="classes/terrain/ice_floor.js?0.9.6b"  type="text/javascript"></script>
+		
+			<!-- beings -->		
+		<script src="classes/player.js?0.9.6b" type="text/javascript"></script>
+		
+		<script src="classes/npc/animated_armour.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/npc/wrabbit.js?0.9.6b"              type="text/javascript"></script>
+		<script src="classes/npc/changeling.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/npc/changeling_enchanter.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/npc/changeling_mage.js?0.9.6b"      type="text/javascript"></script>
+		<script src="classes/npc/diamond_dog.js?0.9.6b"          type="text/javascript"></script>
+		<script src="classes/npc/diamond_guard.js?0.9.6b"        type="text/javascript"></script>
+		<script src="classes/npc/dummy.js?0.9.6b"                type="text/javascript"></script>
+		<script src="classes/npc/duster.js?0.9.6b"               type="text/javascript"></script>
+		<script src="classes/npc/fillyfooler.js?0.9.6b"          type="text/javascript"></script>
+		<script src="classes/npc/flying_hoof.js?0.9.6b"          type="text/javascript"></script>
+		<script src="classes/npc/foalfiddler.js?0.9.6b"          type="text/javascript"></script>
+		<script src="classes/npc/hydra.js?0.9.6b"                type="text/javascript"></script>
+		<script src="classes/npc/hay_pile.js?0.9.6b"             type="text/javascript"></script>
+		<script src="classes/npc/lesser_changeling.js?0.9.6b"    type="text/javascript"></script>
+		<script src="classes/npc/magic_vortex.js?0.9.6b"         type="text/javascript"></script>
+		<script src="classes/npc/manticore.js?0.9.6b"            type="text/javascript"></script>
+		<script src="classes/npc/mimic.js?0.9.6b"                type="text/javascript"></script>
+		<script src="classes/npc/mole.js?0.9.6b"                 type="text/javascript"></script>
+		<script src="classes/npc/mummy.js?0.9.6b"                type="text/javascript"></script>
+		<script src="classes/npc/parasprite.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/npc/shadow.js?0.9.6b"          		type="text/javascript"></script>
+		<script src="classes/npc/tentacleshy.js?0.9.6b"          type="text/javascript"></script>
+		<script src="classes/npc/timberwolf.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/npc/wild_brony.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/npc/windigo.js?0.9.6b"              type="text/javascript"></script>
+		<script src="classes/npc/which_king.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/npc/wrabbit.js?0.9.6b"              type="text/javascript"></script>
+
+			<!-- fields -->
+		<script src="classes/field/tutorial.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/normal.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/mines.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/nightmare.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/hive.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/everfree.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/frozen_caverns.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/old_castle.js?0.9.6b" type="text/javascript"></script>
+
+
+		<script src="classes/field/quests/pyramid.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/quests/moon.js?0.9.6b" type="text/javascript"></script>
+		
+		<script src="classes/field/barn/barn.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/barn/barn_1.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/barn/barn_2.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/barn/barn_3.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/barn/barn_4.js?0.9.6b" type="text/javascript"></script>
+
+		<!-- - ->
+		<script src="classes/field/test.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/field/quests/polygon.js?0.9.6b" type="text/javascript"></script>
+		<!- - -->
+		
+			<!-- items -->
+		<script src="classes/item/binocular.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/blood_gem.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/bloodthrister.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/cauldron.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/cup.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/cursed_monocle.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/cutiemark_sticker.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/draining_whip.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/elders_scroll.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/farm_hat.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/fork.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/gas_mask.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/moon_sickle.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/muffin.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/net.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/naked_outfit.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/pinkie_stimulant.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/potion_endurance.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/potion_health.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/potion_mana.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/potion_strength.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/potion_wonder.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/power_armor.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/rainbow_rod.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/rod_of_ages.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/spoon.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/socks.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/twilight_juice.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/voodoo.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/whining.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/wizards_cap.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/worn_robe.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/worn_saddle.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/zebra_charm.js?0.9.6b" type="text/javascript"></script>
+		
+		<script src="classes/item/scroll_apples.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_blink.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_empower.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_heal.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/item/scroll_shield.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_stoneskin.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_whine.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_force.js?0.9.6b" type="text/javascript"></script>
+		<script	src="classes/item/scroll_stare.js?0.9.6b" type="text/javascript"></script>
+
+			<!-- objects -->
+		<script src="classes/object/bright_torch.js?0.9.6b"    type="text/javascript"></script>
+		<script src="classes/object/element_magic.js?0.9.6b"   type="text/javascript"></script>		
+		<script src="classes/object/sign.js?0.9.6b"            type="text/javascript"></script>
+		<script src="classes/object/torch.js?0.9.6b"           type="text/javascript"></script>
+		<script src="classes/object/tree.js?0.9.6b"            type="text/javascript"></script>
+		<script src="classes/object/ice_statue.js?0.9.6b"      type="text/javascript"></script>
+		<script src="classes/object/ice_wall.js?0.9.6b"        type="text/javascript"></script>
+		<script src="classes/object/rainbow.js?0.9.6b"         type="text/javascript"></script>
+		<script src="classes/object/ward.js?0.9.6b"            type="text/javascript"></script>
+		
+		<script src="classes/object/gems.js?0.9.6b"            type="text/javascript"></script>
+		<script src="classes/object/herb.js?0.9.6b"            type="text/javascript"></script>
+		<script src="classes/object/money.js?0.9.6b"           type="text/javascript"></script>
+		
+		<script src="classes/object/trap_corruption.js?0.9.6b" type="text/javascript"></script>
+		<script src="classes/object/trap_teleport.js?0.9.6b"   type="text/javascript"></script>
+		<script src="classes/object/trap_pit.js?0.9.6b"        type="text/javascript"></script>
+		<script src="classes/object/trap_wallpass.js?0.9.6b"   type="text/javascript"></script>
+		<script src="classes/object/trap_spooks.js?0.9.6b"     type="text/javascript"></script>
+		
+		<script src="classes/object/clear_pool.js?0.9.6b"      type="text/javascript"></script>
+		<script src="classes/object/small_pool.js?0.9.6b"      type="text/javascript"></script>
+		<script src="classes/object/switch.js?0.9.6b"          type="text/javascript"></script>
+		<script src="classes/object/tomes.js?0.9.6b"           type="text/javascript"></script>					
+		
+		<script src="classes/object/victory.js?0.9.6b"         type="text/javascript"></script>
+		<script src="classes/object/althar.js?0.9.6b"          type="text/javascript"></script>
+		
+		<style type="text/css">
+			body { background: black; margin: 0px; }
+			b { color: lightgreen; font-weight: normal; padding: 0px; margin: 0px; }
+			strong { color: blue; }
+			b.type { color: violet; }
+			b.cost { color: lightblue; }
+			b.good { color: lightgreen; }
+			b.bad  { color: red;}
+			
+			.left    { float: left; }
+			.right   { float: right; }
+			.cleaner { clear: both; }
+
+			.btn { background: black; float: left; width: 170px; cursor: pointer; border: 1px solid white; text-align: center; padding: 2px; margin: 2px; }
+			.btn.inactive { color: gray; cursor: default; }
+			.btn.active   { border: 1px solid yellow; }
+			.btn.victorious { border: 1px solid green; }
+				
+			.btn.god { clear: both; border: 1px solid gray; margin: 10px 20px;  }
+			
+			.btn-small { float: left; width: 150px; text-align: center; margin: 2px;}
+			.btn-small.inactive { color: gray; cursor: default; }
+			.btn-small.active   { border: 1px solid yellow; }
+			
+			.btn-page { background: black; width: 40px; cursor: pointer; border: 1px solid white; text-align: center; padding: 1px; margin: 1px; position: absolute; up: 0px; }
+			.btn-page.back { left:  0px; }
+			.btn-page.next { right: 0px; }
+			.btn-page.inactive { color: gray; cursor: default; }
+
+			.buttons { position: relative; width: 100%; text-align: center;}
+			.holder { position: relative; float: left; width: 180px; height: 277px; border: 1px solid gray; margin-right: 10px;	text-align: center; }
+			.holder div.h1 { width: 100%; text-decoration: underline; margin-bottom: 15px; }
+			.achievement_holder {margin-top: 8px; position: relative; width: 470px; float: left;}
+			.achievement_holder div { width: 64px; height: 64px; -webkit-border-radius: 32px; -moz-border-radius: 50%; border-radius: 50%; background: #fff; float: left; margin-right: 3px;}
+			.achievement_holder div.closed { background: #eee; }
+			.cost { color: yellow; }
+			.text { color: white; }
+			
+			.map	  { font-family: monospace; font-size: 24px; cursor: pointer; border: 1px solid black; float: left; background: black; color: white; border: 1px solid silver; }
+			.map span { display: block; float: left; width: 14px; height: 22px; text-align: center; }
+			.map span.fog-1 { background: red; }
+			.map span.fog-2 { background: blue; }
+			.map span.fog-3 { background: black; }
+			.map span.foggy { color: #333;}
+			
+			.map .npc { position: relative; }
+			.map .npc-level { position: absolute; right: 0px; bottom: 0px; font-size: 8px; color: white; }
+		
+			.c-holder { float: left; margin-left: 3px; width: 900px; }
+			.b-holder { float: left; margin-left: 5px; margin-top: 2px; width: 410px; font-size: small;}
+			
+			.console     { margin-bottom: 5px; padding: 0; font-size: 10pt; }
+			.console div { padding: 3px 3px 5px 3px; }
+			.console div.t { display: inline-block; }
+			
+			.interface { width: 500px; }
+			
+			.item-0 {color: white;}
+			.item-1 {color: white;}
+			.item-2 {color: white;}
+
+			.main_container { margin: 8px; }
+
+			.main-menu { float: left; margin-left: 10px; }
+			.main-menu .skill-holder { height: 34px; }
+			.main-menu .message { font-size: 10pt; }
+
+			.bar { z-index: 10; background: black; margin-bottom: 3px; margin-right: 5px; height: 20px; width: 100px; border: 1px solid gray; text-align: center; position: relative; }
+			.bar .text { z-index: 12; display: block; }
+			.bar .bar_fill { z-index: -1; height: 20px; position: absolute; top: 0px; left: 0px; }
+			.bar .bar_fill .substr { height: 20px; position: absolute; top: 0px; right: 0px; }
+
+			.shop { float: left; margin-left: 10px; width: 380px; }
+			.shop .btn { float: left; text-align: left; padding-left: 10px; height: 22px;}
+			.shop .btn span.title { font-size: 12px; }
+			.shop .btn .action { float: right; display: block; border: 1px dotted; margin-left: 3px; padding: 0px 5px; }
+			.shop .btn .type-0 { color: white; }
+			.shop .btn .type-1 { color: blue; }
+			.shop .btn .type-2 { color: red; }
+			
+			.touch-controls { float: left; margin-left: 10px; }
+			.touch-btn { float: left; border: 3px solid black; cursor: pointer; margin-right: 1px; }
+			.touch-btn.active { border: 3px solid red; }
+			
+			.fl {float: left;}
+			
+			.localization { margin: 5px 0px; }
+			.flag { float: left; border: 1px solid black; cursor: pointer; margin-right: 5px; }
+			.flag.active { border: 1px solid red; cursor: default; }
+			
+			.movesFrame { float: left; width:102px; height:30px; margin: 1px; }
+			.progressBarFrame { width:100px; height:12px; background: #663300; }
+			.progressBar { background: #CC9933; height:100%; }
+			.movesCounter { width:100px; text-align: center; }
+			
+			.main-menu .hp { background-color: #cc0000; }
+			.main-menu .hp .substr { background-color: #660000; }
+			
+			.main-menu .mp { background-color: blue; }
+			.main-menu .mp .substr { background-color: navy; }
+			
+			.msg-log { padding-left: 5px; margin-left: 3px; border-left: 3px double silver; margin-bottom: 10px;}
+			
+			.counter { position: absolute; right: 30px; top: 4px; }
+			.ver     { color: gray; position: absolute; left: 10px; }
+			
+			
+			.main_container { border: 1px solid gray; color: white; background: url(images/darkNoise.png);  }
+			.chapter { padding: 3px 0 3px 5px; min-height: 600px; position: relative }
+			.chapterMenu { border-bottom: 1px solid gray; margin-top: 3px; padding: 5px 0; position: relative }
+			.chapterMenu span { cursor: pointer; }
+			.chapterMenu a { color: white; text-decoration: none; }
+			
+			.chapter.text { padding: 20px 15px 0; }
+			.chapter.text .header { font-size: 20px; margin-bottom: 10px;}
+			.chapter.text .text   { margin-left: 20px; }
+			.chapter.text .text a { color: white; }
+			
+			.language {}
+			.chapter {}
+			.text {}
+			
+			.jGrowl-notification { border: 1px solid white; padding: 5px; }
+			
+			.ui-tooltip.ui-widget.ui-widget-content {max-width: 400px; background: black; border: 1px solid silver; font-size: 12px; padding: 6px 12px; color: white; position: absolute; z-index: 200; }
+			
+			.control { clear: both; margin-bottom: 10px; }
+			.control label { float: left; width: 150px; }
+			.control input { float: left; }
+			.control input[type=text] { height: 14px; }
+			
+			.frame {position: relative; height: 105px; width: 320px; }
+			.frame .frame-img { position: absolute; top: 0px; left: 0px; z-index: 1; }
+			.frame .name { position: absolute; top: 6px; left: 54px; }
+			.frame .race { z-index: 2; position: absolute; width: 64px; height: 64px; top: 34px; left: 34px; }
+			.frame .text-title { position: absolute; left: 105px; top: 30px; font-size: 14px;} 
+			.frame .stat-title { position: absolute; left: 105px; top: 48px; font-size: 14px;}
+			.frame .bars { position: absolute; top: 70px; left: 105px; width: 215px; }
+			
+			.frame.enemy-frame { height: 75px; }
+			.frame.player-frame .frame-img { width: 100px; height: 100px; }
+			.frame.player-frame .class { z-index: 2; position: absolute; width: 45px; height: 45px; top: 1px; left: 1px; }
+						
+			.frame.enemy-frame .frame-img { width: 70px; height: 70px; }
+			.frame.enemy-frame .race { left: 3px; top: 2px; }			
+			.frame.enemy-frame .name { left: 80px; top: 0px; }
+			.frame.enemy-frame .stat-title { left: 80px; top: 20px; }
+			.frame.enemy-frame .bars { left: 80px; top: 40px; }
+
+			.preloader { z-index: 100; background: black; position: fixed; width: 100%; height: 100%; top: 0; left: 0; text-align: center; color: white; padding-top: 150px; }
+			.preloader .bar { width: 400px; display: inline-block; margin-top: 30px; border: 3px silver double; margin-bottom: 10px; }
+			.preloader .hp { background-color: #cc00cc; }
+			.preloader .hp .substr { background-color: #660066; }
+
+			.sound {
+				width: 20px;
+				height: 20px;
+				position: absolute; top: 2px; right: 5px;
+				cursor: pointer;
+				background-image: url("images/ui/music.svg");
+				background-size:   cover;
+				background-repeat: no-repeat;
+				background-position: center center; }
+			.sound.on { background-image: url("images/ui/pause.svg"); }
+		</style>
+		
+	</head>
+	<body>
+		<div class="preloader" id="preloader">
+			<div>
+				PonyRL v<span class="version"></span><br />
+				<div id="preload-bar" class="bar" style="display: inline-block;">
+					<div class="hp bar_fill" style="width: 100%;">
+						<div class="substr" style="width: 100%;"></div>
+					</div>
+					<span class="text"></span>
+				</div>
+				<br />
+				<span class="message">...loading...</span>
+			</div>
+		</div>
+		<div class="main_container">
+			<div class="chapterMenu">
+				<div class="ver">
+					[<span class="version"></span>]
+				</div>
+				<center>
+					<span id="mainmenu_1" class="language" onClick="showChapter('game');">Play</span>
+					&middot;
+					<span id="mainmenu_2" class="language" onClick="World.getHandler(STATE_MENU).showOptions(); showChapter('options');">Options</span>
+					&middot;
+					<span id="mainmenu_3" class="language" onClick="World.getHandler(STATE_MENU).hallOfFame(); showChapter('hall');">Hall of Fame</span>
+					&middot;
+					<span id="mainmenu_4" class="language" onClick="World.getHandler(STATE_MENU).changelog(); showChapter('version');">Change log</span>
+					&middot;
+					<span id="mainmenu_5" class="language" onClick="showChapter('links');">Links</span>
+					&middot;
+					<a id="mainmenu_6" href="http://forum.ponyrl.com" class="menu_link language">Forum</a>
+					<div class="mute">
+						<span class="glyphicon glyphicon-volume-up"></span>
+					</div>
+					<span class="sound" onClick="TConfig.handlers[STATE_MENU].switchSound();"></span>
+				</center>
+				<div class="counter" style="display: none;">
+					<!--LiveInternet counter --> <script type="text/javascript">document.write("<a href='http://www.liveinternet.ru/click' target=_blank><img src='//counter.yadro.ru/hit?t24.5;r" + escape(document.referrer) + ((typeof(screen)=="undefined")?"":";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?screen.colorDepth:screen.pixelDepth)) + ";u" + escape(document.URL) + ";" + Math.random() + "' border=0 width=88 height=15 alt='' title='LiveInternet'><\/a>")</script><!--/LiveInternet-->		
+				</div>
+			</div>
+			
+			
+			<div class="chapter text" id="optionsPart" style="display: none;">
+				<div class="header">Options</div>
+				<div class="cleaner"></div>
+				<div class="control">
+					<label for="options_2_input">
+						<span id="options_2" class="language"></span>
+					</label>
+					<input type="text" id="options_2_input" onChange="World.getHandler(STATE_MENU).changeOptions();"><br />
+				</div>
+				<div class="control">
+					<label for="options_1_input">
+						<span id="options_1" class="language"></span>
+					</label>
+					<input type="checkbox" id="options_1_input" onChange="World.getHandler(STATE_MENU).changeOptions();"><br />
+					<div class="cleaner">
+						<small><span id="options_1_descr" class="language"></span></small>
+					</div>
+				</div>
+				<div class="control">
+					<label for="options_3_input">
+						<span id="options_3" class="language"></span>
+					</label>
+					<input type="checkbox" id="options_3_input" onChange="World.getHandler(STATE_MENU).changeOptions();"><br />
+					<div class="cleaner">
+						<small><span id="options_3_descr" class="language"></span></small>
+					</div>
+				</div>
+				<div class="control">
+					<label for="options_4_input">
+						<span id="options_4" class="language"></span>
+					</label>
+					<input type="checkbox" id="options_4_input" onChange="World.getHandler(STATE_MENU).changeOptions();"><br />
+					<div class="cleaner">
+						<small><span id="options_4_descr" class="language"></span></small>
+					</div>
+				</div>
+				<br />
+				<div>
+					<div class="btn" onClick="World.wrapper.saveToString();">
+						<span id="options_export" class="language"></span>
+					</div>
+					<div class="btn" onClick="World.wrapper.loadFromString();">
+						<span id="options_import" class="language"></span>
+					</div>
+					<div class="btn" onClick="World.wrapper.save(true);">
+						<span id="options_save" class="language"></span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="chapter text" id="hallPart" style="display: none;">
+				<div class="header">Hall of Fame</div>
+				<div class="text left" id="hallText">
+					
+				</div>
+				<img class="right" src="images/art/warrior.png" width="400">
+				<div class="cleaner"></div>
+			</div>
+			
+			
+			<div class="chapter text" id="linksPart" style="display: none;">
+				<div class="header">Links</div>
+				<div class="text left">
+					<noindex>
+					- <a href="http://forums.roguetemple.com/index.php?topic=3508.0">Current devlog & feedback thread (English)</a><br />
+					- <a href="http://roguebasin.roguelikedevelopment.org/index.php?title=PonyRL">Roguebasin wiki entry</a><br />
+					- <a href="http://2ch.hk/mlp/res/3212050.html">Обсуждение на 2ch/mlp</a><br />
+					- <a href="https://np.reddit.com/r/mylittlepony/comments/3y78fu/ponyrl_the_browser_pony_roguelike_096/">Current Reddit thread</a><br />
+					</noindex>
+					<div><small>Any feedback is highly appreciated!</small></div>
+					<br />
+					<div>Experimental tools</div>
+					- <a href="http://ponyrl.com/language.html">Localization editor</a><br />
+					- <a href="http://ponyrl.com/octavia">Experimental branch with sound</a><br />
+					- <a href="http://ponyrl.com/win32.zip">Standalone version for win32. No sound</a><br />
+				</div>
+				<img class="right" src="images/art/scout.jpg">
+				<div class="cleaner"></div>
+			</div>
+			
+			<div class="chapter" id="gamePart">
+				<div id="menu" class="menu">
+					<div class="buttons">
+						<div class="holder">
+							<div id="wrap_class" class="h1 language">CLASS</div>
+							<div class="class_holder"></div>
+						</div>
+						<div class="holder">
+							<div id="wrap_race" class="h1 language">RACE</div>
+							<div class="race_holder"></div>
+						</div>
+						<div class="holder">	
+							<div class="btn-page back" id="btn_back" onClick="World.getHandler().pageTurn(PAGE_BACK);">Back</div>
+							<div class="btn-page next" id="btn_next" onClick="World.getHandler().pageTurn(PAGE_NEXT);" style="float:right">Next</div>
+							<div id="wrap_terrain" class="h1 language">TERRAIN</div>
+							<div class="field_holder"></div>
+						</div>
+						<div class="achievement_holder"></div>
+						<div class="cleaner"></div>
+					</div>
+					<div class="cleaner"></div>
+					<div class="localization">
+						<img class="flag" src="images/languages/gb.png" id="flag_1" onClick="localize(1);">
+						<img class="flag" src="images/languages/fr.png" id="flag_2" onClick="localize(2);">
+					<!--	<img class="flag" src="images/languages/it.png" id="flag_4" onClick="localize(4);"> -->
+						<div class="cleaner"></div>
+					</div>
+					<div class="btn" onClick="showChapter('replay')" >
+						<span id="replay_main_btn" class="language"></span>
+					</div>
+					<div class="cleaner"></div>
+					<div class="console">
+						<div></div>
+					</div>
+				</div>
+				
+				<div class="game" style="display: none;" id="game">
+					<div class="map" id="map_placeholder">Loading...</div>
+					<div class="main-menu" id="main_menu">
+						<div class="player-frame frame">
+							<img class="frame-img" src="images/frame.png">								
+							<img class="class" id="player-class-img" src="images/classes/1.png">								
+							<img class="race"  id="player-race-img"  src="images/races/1.png">								
+							<div class="name">
+								<span id="name-div"></span>
+								<span id="level-div"></span>
+								&middot;
+								[<span id="xp-div"></span>/<span id="need-div"></span> xp]
+							</div>
+							<div class="text-title">
+								<span id="race-div"></span>
+								<span id="class-div"></span>
+								<span id="religion-div"></span>
+							</div>
+							<div class="stat-title">
+								<span id="gp-div"></span><b class="type" title="Bits">$</b>
+								&middot;
+								<span id="att-div"></span><b class="type" title="Attack">A</b>
+								&middot;
+								<span id="piety-div"></span><b class="type" title="Piety">P</b>								
+								&middot;
+								<acronym id="field-div">
+									Turn <span id="turn-div" title=""></span>
+								</acronym>
+							</div>
+							<div class="bars">
+								<div id="hp" class="bar fl" title="Health">
+									<div class="hp bar_fill" style="width: 100%;">
+										<div class="substr" style="width: 0%;"></div>
+									</div>
+									<span class="text">12</span>
+								</div>
+								<div id="mp" class="bar fl" title="Mana">
+									<div class="mp bar_fill" style="width: 100%;"><div class="substr" style="width: 0%;"></div></div>
+									<span class="text"></span>
+								</div>
+								<div class="cleaner"></div>
+							</div>
+						</div>
+						<div class="cleaner"></div>
+						<div id="skills" class="skill-holder"></div>
+						<div id="message"></div>
+						<div id="enemy-holder" class="enemy-frame frame" style="display: none;">
+							<img class="frame-img" src="images/frame_e.png">
+							<img class="race"  id="enemy-race-img"  src="images/enemies/unknown.png">
+							<div class="name">
+								<span id="enemy-name"></span>
+								<span id="enemy-level"></span>
+							</div>
+							<div class="stat-title">
+								<span id="e-gp-div"></span><b class="type" title="Bits">$</b>
+								&middot;
+								<span id="e-att-div"></span><b class="type" title="Attack">A</b>
+							</div>
+							<div class="bars">
+								<div id="e-hp" class="bar fl" title="Health">
+									<div class="hp bar_fill" style="width: 100%;">
+										<div class="substr" style="width: 0%;"></div>
+									</div>
+									<span class="text">12</span>
+								</div>
+								<div id="e-mp" class="bar fl" title="Mana">
+									<div class="mp bar_fill" style="width: 100%;"><div class="substr" style="width: 0%;"></div></div>
+									<span class="text"></span>
+								</div>
+								<div class="cleaner"></div>
+							</div>							
+						</div>
+						<div id="enemy-message" class="skill-holder"></div>
+					</div>
+					<div class="shop" id="shop">
+					</div>
+					<div class="cleaner"></div>
+					
+					<div class="touch-controls" id="touch_controls_holder">
+						<table class = "table">
+							<tr>
+								<td><img class="touch-btn" src="images/controls/up_left_arrow.png" id="move_up_left" onClick="World.getHandler(STATE_GAME).touchKey(36)"></td>
+								<td><img class="touch-btn" src="images/controls/up_arrow.png" id="move_up" onClick="World.getHandler(STATE_GAME).touchKey(38)"></td> 
+								<td><img class="touch-btn" src="images/controls/up_right_arrow.png" id="move_up_right" onClick="World.getHandler(STATE_GAME).touchKey(33)"></td>
+							</tr>
+							<tr>
+								<td><img class="touch-btn" src="images/controls/left_arrow.png" id="move_left" onClick="World.getHandler(STATE_GAME).touchKey(37)"></td>
+								<td><img class="touch-btn" src="images/controls/target.png" id="move_target" onClick="World.getHandler(STATE_GAME).touchKey(32)"></td> 
+								<td><img class="touch-btn" src="images/controls/right_arrow.png" id="move_right" onClick="World.getHandler(STATE_GAME).touchKey(39)"></td>
+							</tr>
+							<tr>
+								<td><img class="touch-btn" src="images/controls/down_left_arrow.png" id="move_down_left" onClick="World.getHandler(STATE_GAME).touchKey(35)"></td>
+								<td><img class="touch-btn" src="images/controls/down_arrow.png" id="move_down" onClick="World.getHandler(STATE_GAME).touchKey(40)"></td> 
+								<td><img class="touch-btn" src="images/controls/down_right_arrow.png" id="move_down_right" onClick="World.getHandler(STATE_GAME).touchKey(34)"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="cleaner"></div>
+					<div class="replay_controls" id="replay_controls_holder">
+						<img class="flag" title = "To Start" src="images/controls/double_left_arrow.png" id="replay_first" onClick="World.getHandler(STATE_REPLAY).control(REPLAY_CTRL_FIRST)">
+						<img class="flag" title = "Next" src="images/controls/right_arrow.png" id="replay_next" onClick="World.getHandler(STATE_REPLAY).control(REPLAY_CTRL_NEXT)">
+					
+						<div class="movesFrame">
+							<div class="progressBarFrame">
+								  <div class="progressBar" id = "progress_bar"></div>
+							</div>
+							<div class="movesCounter" id = "moves_counter"></div>
+						</div>
+						<img class="flag" title = "Stop replay" src="images/controls/double_lines.png" id="replay_stop" onClick="World.getHandler(STATE_REPLAY).control(REPLAY_CTRL_STOP)">
+						<img class="flag" title = "Start replay/Increase speed" src="images/controls/full_right_arrow.png" id="replay_start" onClick="World.getHandler(STATE_REPLAY).control(REPLAY_CTRL_GO)">						
+					</div>
+					<div class="cleaner"></div>	
+					<div class="b-holder" id="b_holder">
+					</div>
+					<div class="cleaner"></div>
+					<div class="c-holder">
+						<div class="console">
+							<span id="console"></span>
+							<span id="consoleAlert"></span>
+						</div>
+					</div>
+					<div class="cleaner"></div>
+					<div id="interface" class="interface"></div>
+					<div class="cleaner"></div>	
+					
+					<div class="btn" onClick="World.changeGameState(STATE_MENU,{});" style="position: absolute; bottom: 0px; right: 3px;">Exit</div>			
+				</div>
+
+				<div id="splash" style="display: none;">
+					<div id="splash_console">
+
+					</div>
+					<div id="splash_log" class="msg-log">
+
+					</div>
+					Game log:
+					<div id="splash_time" class="msg-log">
+
+					</div>			
+					<div class="cleaner"></div>
+					<div class="btn" onClick="World.changeGameState(STATE_MENU,{});">Menu</div>
+					<div class="cleaner"></div>
+					
+					<div class ="replay_save">
+						<span id="replay_save_text" class="language"></span>
+						<br>
+						<textarea readonly="readonly" id = "replay_save_code" rows="10" cols="100"></textarea>
+					</div>
+				</div>
+			</div>
+			
+						
+			<div class="chapter text" id="replayPart" style="display: none;">
+				<div class="header">Replay game</div>
+				<br />
+				<div>
+					<label for="replay_load_code">
+						<span id="replay_load_text" class="language"></span>
+					</label>
+				</div>				
+				<div>
+					<textarea id="replay_load_code" rows="10" cols="100"></textarea>
+				</div>
+				<div class="btn" onClick="World.replay.loadReplay(STATE_GAME);">
+					<span id="replay_load_btn" class="language"></span>
+				</div>
+				<div class="btn" onClick="World.replay.loadReplay(STATE_REPLAY);">
+					<span id="watch_load_btn" class="language"></span>
+				</div>
+			</div>
+			
+			<div class="chapter text" id="versionPart" style="display: none;">
+				<div class="header">Change Log</div>
+				<div class="text left" id="changelog">
+
+				</div>
+				<img class="right" src="images/art/art_fuck.jpg" width="560" />
+				<div class="cleaner"></div>
+			</div>
+		</div>
+			
+			
+		<div id="alert" class="bottom-left"></div>
+
+		<script>
+			/*
+			 * @type TWorld
+			 */
+			var World = false;
+			var soundsOn = true;
+
+			jQuery(".version").html(TConfig.version);
+
+			if(!soundsOn)
+			{
+				jQuery(".sound").hide();
+			}
+
+			if (typeof console === "undefined")
+			{
+				console={};
+				console.log = function(){return;}
+			}
+			
+			jQuery(function()
+				{
+					World = new TWorld();
+					
+					localize(LANGUAGE_EN);
+
+					World.init();
+					World.changeGameState(STATE_PRELOAD,{});
+					
+					for(var i in TConfig.data[KEY_ACHIEVEMENT])
+						World.wrapper.addAchievement(i);
+					
+					jQuery(document).tooltip({
+							items: "[title]",
+							track: true,
+							show : true,
+							hide : true,
+							content: function() {
+								var element = jQuery(this);
+								if(element.is("[title]"))
+									return element.attr("title");
+							}
+						});
+						
+					World.draw();
+				});
+		</script>
+
+	</body>
+</html>
