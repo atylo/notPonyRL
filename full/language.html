@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The Pony Roguelike - translation editor</title>		
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="description" content="PonyRL is a My Little Pony browser roguelike game with short sessions and achievement-based progression system." />
+		<meta name="keywords" content="Roguelike, ASCII, My Little Pony, MLP, PonyRL, achievements, coffee-break">
+		
+					<!-- 2012-2014 by Chess Wyrm -->
+			<!-- libraries -->
+		<script src="lib/jquery.min.js?0.9.5" type="text/javascript"></script>
+		<script src="lib/jquery.ui.js?0.9.5" type="text/javascript"></script>
+		<script src="lib/jquery.hotkeys.js?0.9.5" type="text/javascript"></script>
+		<script src="lib/extend.js?0.9.5"         type="text/javascript"></script>
+		<script src="lib/lib.js?0.9.5"            type="text/javascript"></script>
+		<script src="lib/rabbit.js?0.9.5"         type="text/javascript"></script>
+
+			<!-- jGrowl -->
+		<script src="lib/jgrowl/jquery.jgrowl.min.js?0.9.5" type="text/javascript" ></script>
+		<link rel="stylesheet" href="lib/jgrowl/jquery.jgrowl.css" type="text/css"/>
+		
+		
+			<!-- core -->
+		<script src="core/const.js?0.9.5"      type="text/javascript"></script>
+		<script src="core/config.js?0.9.5"     type="text/javascript"></script>
+		
+		<style type="text/css">
+			.lang-title { font-size: small; margin-top: 10px; }
+			.lang-input { clear: right; }
+			.lang-input input { width: 800px; font-size: 11px; }
+			.helper     { font-size: small; color: gray; }
+		</style>
+	</head>
+	<body>
+		<div class="template" style="display: none;">
+			<div class="lang">
+				<div class="lang-title">NiceKey</div>
+				<div class="lang-input">
+					<input type="text"/>
+				</div>
+				<div class="helper">SomeHelper</div>
+			</div>
+		</div>
+		<div>
+			<a href="language.html?1#fr">FR</a>
+			&middot;
+			<a href="language.html?2#it">IT</a>
+			&middot;
+			<a href="language.html?3#ru">RU</a>
+			
+		</div>
+		<button onclick="generateLangFile();">Generate File</button>		
+		<div id="field">
+			
+		</div>				
+		<button onclick="generateLangFile();">Generate File</button>
+		<br />
+		<div id="file">
+			<textarea style="display: hidden; width: 100%;" rows="50">
+
+			</textarea>
+			<p>
+				Thank you! Now final steps: <br />
+				1. Post contents of textarea on <a href='http://pastebin.com/'>Pastebin</a><br />
+				2. Post a link <a href='http://forum.ponyrl.com/viewtopic.php?id=5'>here</a><br />
+			</p>
+		</div>
+			
+		<script>
+			var main_lang   = 'core/lang-en.js';
+			var second_lang = 'core/lang-fr.js';
+			
+			var x = location.hash;
+			if(x)
+			{
+				second_lang = 'core/lang-' + x.replace("#", "") + ".js";
+			}
+			
+			var langs     = [];
+			
+			function addLang(lang, key, value)
+			{
+				langs[lang][key] = value;
+			}
+			
+			function addLangTpl(key)
+			{
+				var key  = key;
+				var help = (langs[main_lang][key]   === undefined)?"???":langs[main_lang][key];
+				var curr = (langs[second_lang][key] === undefined)?help:langs[second_lang][key];
+				
+				help = htmlEntities(help);
+				if(langs[second_lang][key] === undefined)
+					help = "<font color=red>" + help + "</font>";
+				
+				var s = jQuery(".template").first().clone();
+				jQuery(s).show();
+				jQuery(s).find(".lang-title").html(key);
+				jQuery(s).find(".helper").html(help);
+				jQuery(s).find(".lang-input input").val(curr);
+				
+				jQuery("#field").append(s);
+			}
+			
+			function generateLangFile()
+			{
+				var str = '';
+				jQuery("#field .template").each(function()
+					{
+						var key  = jQuery(this).find(".lang-title").html();
+						var curr = jQuery(this).find(".lang-input input").val();
+						
+						curr = curr.replace(/\'/g, "'");
+						curr = curr.replace(/'/g, "\'");
+						
+						var s = "addLang('" + key + "', '" + curr + "');";
+						
+						str = str + s + "\n";
+					});
+					
+				jQuery("#file textarea").val(str);
+				jQuery("#file").show();
+				window.scrollTo(0,document.body.scrollHeight);
+			}
+			
+			function htmlEntities(str) 
+			{
+				return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+			}			
+			
+			function parseLangFile(lang)
+			{
+				if(langs[lang] == undefined)
+					langs[lang] = [];
+				
+				var t = jQuery.ajax({
+						url    : lang,
+						cache  : false,
+						async  : false
+					});
+					
+				if(t.readyState === 4)
+				{
+					var s = t.responseText;
+					
+					var arr = s.split("\n");
+					
+					for(var i in arr)
+					{
+						var str = arr[i].trim();
+						if(str.indexOf("addLang('") == -1)
+							continue;
+						
+						str = str.replace("addLang('", "");
+						str = str.replace("');", "")
+						str = str.replace('");', "")
+						
+						var key = str.substr(0,str.indexOf(',')).trim();
+						var val = str.substr(str.indexOf(',') + 1).trim();
+						
+						key = key.substr(0, key.length - 1);
+						val = val.substr(1);
+						
+						addLang(lang, key, val)
+					}
+				}
+			}
+			
+			parseLangFile(main_lang);
+			parseLangFile(second_lang);
+			
+			for(var i in langs[main_lang])
+			{
+				addLangTpl(i);
+			}
+	
+		</script>
+	</body>
+</html>
