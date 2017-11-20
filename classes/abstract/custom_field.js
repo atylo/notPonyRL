@@ -165,6 +165,7 @@ function CustomField()
 		World.player.refresh();
 		World.map.initFoV(World.player.x, World.player.y, World.player.sight, 1);
 	};
+
 	
 	this.placeBookmarkObject = function(obj, bookmark)
 	{
