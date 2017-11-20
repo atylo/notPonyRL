@@ -151,28 +151,35 @@
 			
 			World.fieldID = data['f'];
 			World.field   = World.getObject(data['f'], KEY_FIELD);
-			
+
+			World.shop.init();
+			seed_str = seed_str + 'S ' + World.seedRandom.getCurrentSeed() + '\n';
 			World.field.init();
 			seed_str = seed_str + 'F ' + World.seedRandom.getCurrentSeed() + '\n';
 			World.queue.init();
 			seed_str = seed_str + 'Q ' + World.seedRandom.getCurrentSeed() + '\n';
 			World.menu.change();
 			seed_str = seed_str + 'M ' + World.seedRandom.getCurrentSeed() + '\n';
-			World.shop.init();
-			seed_str = seed_str + 'S ' + World.seedRandom.getCurrentSeed() + '\n';
 			World.events.clear();
 			seed_str = seed_str + 'E ' + World.seedRandom.getCurrentSeed() + '\n';
+
 			
-			console.log(seed_str);
-			console.log(data['seed']);
+			//console.log(seed_str);
+			//console.log(data['seed']);
+
+			var reg_arr = [];
+			reg_arr[-1] = 100;
+			reg_arr[-2] = 100;
+			reg_arr[-3] = 100;
+			World.regen(reg_arr);
 			
 			jQuery('#touch_controls_holder').hide();
 			
 			if (data['x'] != World.seedRandom.getCurrentSeed() || data['seed'] != seed_str)
 			{
 				notification(lang('error.seed_mismatch'));
-				console.log('Replay seeds: ' + data['seed']);
-				console.log('New seeds: ' + seed_str);
+				//console.log('Replay seeds: ' + data['seed']);
+				//console.log('New seeds: ' + seed_str);
 				//console.log("Resulting seed after map creation:" + World.seedRandom.getCurrentSeed() + ". Mismatch = " + (data["x"]-World.seedRandom.getCurrentSeed()) + ", Decoded array of data in line below.");
 				//console.log(World.replay.blocks)
 					// Attempt to salvage the game despite something obviously missing!
@@ -181,7 +188,9 @@
 			
 			jQuery(document).on('mouseover' , '.t',{mode: "h"}, World.getHandler(STATE_REPLAY).action);
 			jQuery(document).on('mouseout'  , '.t',{mode: "o"}, World.getHandler(STATE_REPLAY).action);
-			
+
+			World.raiseEvent(LOG_GAME_START, KEY_FIELD, World.field, false, false);
+
 			return true;
 		};
 		

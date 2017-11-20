@@ -23,9 +23,9 @@ function TObjectDoor()
 	this.getDescription = function()
 	{
 		if (this.isOpen)
-			return lang('object.' + this.id + '.description.1');
+			return this.draw() + lang('object.' + this.id + '.description.1');
 		else
-			return lang('object.' + this.id + '.description.0');
+			return this.draw() + lang('object.' + this.id + '.description.0');
 	};
 	
 	this.onMove = function()

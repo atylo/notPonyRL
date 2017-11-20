@@ -11,7 +11,7 @@ function TObjectIceStatue()
 	this.getDescription = function()
 	{
 		var race_str = lang('race.' + this._race + '.title');
-		return lang('object.' + this.id + '.description.0', {r: race_str.toLowerCase()});
+		return this.draw() + lang('object.' + this.id + '.description.0', {r: race_str.toLowerCase()});
 	};
 
 	this.onMove = function()

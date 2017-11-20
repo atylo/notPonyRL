@@ -1,7 +1,7 @@
 function TSkillForcePony()
 {
 	ExtClass.call(this, {AbstractSkill: null});
-
+	
 	this.cost  = 0;
 	this.range = 1;
 	

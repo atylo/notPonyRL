@@ -31,20 +31,19 @@ function TObjectSign()
 		if(World.player.x == this.x && World.player.y == this.y)
 			return false;
 		
-		World.queue.addAlert(lang('object.' + this.id + '.action.0', {'d': this.text, 'f': this.description}));
-		World.queue.drawAlerts();
+		World.queue.addAlert(lang('object.' + this.id + '.action.0', {'d': this.text, 'f': this.getDescription()}));
 		return true;
 	};
 	
 	this.onLook = function()
 	{
-		World.queue.add(lang('object.' + this.id + '.action.0', {'d': this.text, 'f': this.description}));
+		World.queue.add(lang('object.' + this.id + '.action.0', {'d': this.text, 'f': this.getDescription()}));
 		return true;
 	};
 	
 	this.onMove = function()
 	{
-		World.queue.add(lang('object.' + this.id + '.action.0', {'d': this.text, 'f': this.description}));
+		World.queue.add(lang('object.' + this.id + '.action.0', {'d': this.text, 'f': this.getDescription()}));
 		return true;
 	};
 	

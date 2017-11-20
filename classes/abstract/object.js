@@ -39,7 +39,7 @@ function AbstractObject()
 	
 	this.getDescription = function()
 	{
-		return lang('object.' + this.id + '.description.0');
+		return this.draw() + lang('object.' + this.id + '.description.0');
 	};
 	
 	this.getTitle = function()
@@ -72,9 +72,8 @@ function AbstractObject()
 				// standing on that object already?
 		if(World.player.x == this.x && World.player.y == this.y)
 			return false;
-		
+
 		World.queue.addAlert(this.getDescription());
-		World.queue.drawAlerts();
 		return true;
 	};
 	
