@@ -80,12 +80,12 @@
 			this.messages.push('Running from Pinkie...');
 
 					// audio
-			this.queue.push(['ambient-game.mp3', 'audio', {loop: true, volume: 0.05}]);
-			this.queue.push(['ambient-everfree.mp3', 'audio', {loop: true, volume: 0.05}]);
-			this.queue.push(['ambient-menu.mp3', 'audio', {loop: true, volume: 0.05}]);
-			this.queue.push(['ambient-splash-bad.mp3', 'audio', {loop: true, volume: 0.05}]);
-			this.queue.push(['ambient-splash-good.mp3', 'audio', {loop: true, volume: 0.05}]);
-			this.queue.push(['ambient-splash-ok.mp3', 'audio', {loop: true, volume: 0.05}]);
+			this.queue.push(['ambient-game.mp3', 'audio', {loop: true, volume: 0.3}]);
+			this.queue.push(['ambient-everfree.mp3', 'audio', {loop: true, volume: 0.3}]);
+			this.queue.push(['ambient-menu.mp3', 'audio', {loop: true, volume: 0.3}]);
+			this.queue.push(['ambient-splash-bad.mp3', 'audio', {loop: true, volume: 0.3}]);
+			this.queue.push(['ambient-splash-good.mp3', 'audio', {loop: true, volume: 0.3}]);
+			this.queue.push(['ambient-splash-ok.mp3', 'audio', {loop: true, volume: 0.3}]);
 			this.queue.push(['event-confront.mp3', 'audio', {loop: false, volume: 0.1}]);
 			this.queue.push(['event-convert.mp3', 'audio', {loop: false, volume: 0.1}]);
 			this.queue.push(['event-death.mp3', 'audio', {loop: false, volume: 0.1}]);
