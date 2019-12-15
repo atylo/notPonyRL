@@ -78,6 +78,12 @@
 			this.messages.push('Rendering Fluttershy...');
 			this.messages.push('Making plotarmor...');
 			this.messages.push('Running from Pinkie...');
+			this.messages.push('Hugging Twilight...');
+			this.messages.push('Raising the barn...');
+			this.messages.push('Racing Rainbow Dash...');
+			this.messages.push('Teaching Starlight...');
+			this.messages.push('Making friends...');
+			this.messages.push('Measuring horn length...');
 
 					// audio
 			this.queue.push(['ambient-game.mp3', 'audio', {loop: true, volume: 0.05}]);
